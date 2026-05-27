@@ -12,5 +12,5 @@ A simple weather application. You enter a city name and it shows you the current
 ├── index.php      - Main page with the form
 ├── config.php     - Loads API key from .env
 ├── functions.php  - getWeather() function
-├── .env           - Your API key
+├── .env           - Your API key (keep secret!)
 └── vendor/        - Composer packages
