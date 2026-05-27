@@ -1,0 +1,13 @@
+{
+    "name": "giorg/my_weather_project",
+    "description": "Weather app with OpenWeatherMap API",
+    "authors": [
+        {
+            "name": "Giorgos Ntertzias",
+            "email": "jorgaqderxhia@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
