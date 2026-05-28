@@ -5,4 +5,6 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $apiKey = $_ENV['API_KEY'];
+$unsplashKey = $_ENV['UNSPLASH_KEY'];
+$pexelsKey = $_ENV['PEXELS_KEY'];
 ?>

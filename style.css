@@ -1,0 +1,199 @@
+/* ============================================================
+   Theme variables
+   Change a colour here once and it updates everywhere it's used.
+   ============================================================ */
+:root {
+    --primary: #2C3E50;   /* dark blue-grey: card and buttons */
+    --accent:  #F39C12;   /* warm gold: input border / highlights */
+}
+
+/* ============================================================
+   Base / page background
+   ============================================================ */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: var(--primary);
+
+    /* Center the card both horizontally and vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dark overlay on top of the background photo so text stays readable */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 0;
+}
+
+/* ============================================================
+   Main card
+   ============================================================ */
+.container {
+    position: relative;   /* required for z-index to take effect */
+    z-index: 1;           /* sits above the photo and the overlay */
+    width: 300px;
+    margin: 20px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.769);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================================
+   Title
+   ============================================================ */
+.app-title {
+    text-align: center;
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* ============================================================
+   Search form
+   ============================================================ */
+.search-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;   /* keep total width at 100%, padding included */
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(30, 144, 255, 0.5);
+}
+
+.search-button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s;   /* smooth colour change on hover */
+}
+
+.search-button:hover {
+    background-color: rgba(105, 205, 242, 0.382);
+}
+
+/* ============================================================
+   Weather result box
+   ============================================================ */
+.weather-result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(12, 2, 2, 0.137);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.weather-result h2 {
+    color: #ffffff;
+    font-size: 26px;
+    margin-bottom: 20px;
+    font-family:OCR A Std, monospace;
+}
+
+.local-time,
+.temp,
+.humidity,
+.description {
+    margin: 0;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgb(240, 255, 255);
+    font-size: 18px;
+    font-weight: bold;
+    font-family:OCR A Std,monospace;
+    text-transform: capitalize;
+}
+
+/* ============================================================
+   Error message
+   ============================================================ */
+.error-message {
+    margin-top: 10px;
+    padding: 10px;
+    color: #D32F2F;
+    background-color: rgba(211, 47, 47, 0.1);
+    border: 1px solid #D32F2F;
+    border-radius: 8px;
+}
+
+/* ============================================================
+   Animated weather effects layer
+   ============================================================ */
+.weather-effects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;   /* clicks pass through to the page below */
+    z-index: 1;
+}
+
+/* --- Clouds and emoji: drift from left to right --- */
+.cloud {
+    position: absolute;
+    left: -150px;
+    font-size: 120px;
+    animation-name: drift;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes drift {
+    from { left: -150px; }
+    to   { left: 110%; }
+}
+
+/* --- Raindrops: fall straight down --- */
+.raindrop {
+    position: absolute;
+    top: -50px;
+    width: 2px;
+    height: 50px;
+    background: linear-gradient(transparent, rgba(174, 194, 224, 0.9));
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+    to { transform: translateY(105vh); }
+}
+
+/* --- Snowflakes: fall while spinning --- */
+.snowflake {
+    position: absolute;
+    top: -30px;
+    font-size: 18px;
+    animation-name: snowfall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes snowfall {
+    to { transform: translateY(105vh) rotate(360deg); }
+}
