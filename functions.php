@@ -47,12 +47,15 @@ function getWeather($city, $apiKey)
  * @param  string      $unsplashKey  Unsplash access key
  * @return string|null               Photo URL, or null if none was found
  */
-function getCityPhoto($city, $unsplashKey)
+function getCityPhoto($city, $unsplashKey, $isDay = true)
 {
+ $timeOfDay = $isDay ? "sunny" : "night";
+ $query = $city . " " . $timeOfDay;
+
  $url = "https://api.unsplash.com/search/photos"
-  . "?query=" . urlencode($city)
+  . "?query=" . urlencode($query)
   . "&client_id=" . $unsplashKey
-  . "&per_page=1";
+  . "&per_page=10";
 
  $context = stream_context_create([
   'http' => ['ignore_errors' => true]

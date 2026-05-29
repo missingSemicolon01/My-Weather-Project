@@ -6,5 +6,4 @@ $dotenv->load();
 
 $apiKey = $_ENV['API_KEY'];
 $unsplashKey = $_ENV['UNSPLASH_KEY'];
-$pexelsKey = $_ENV['PEXELS_KEY'];
 ?>
