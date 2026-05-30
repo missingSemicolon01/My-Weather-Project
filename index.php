@@ -18,7 +18,7 @@ $isDay = null;
 $emojiClear = "☀️";
 $emojiFew = "🌤️";
 $emojiClouds = "☁️";
-$emojiRain = "🌧️";
+$emojiRain = "☔";
 $emojiSnow = "❄️";
 $weatherIcon = "🌤️";
 
@@ -55,20 +55,20 @@ if (isset($_GET['city']) && !empty($_GET['city'])) {
     // Day if the current time is between sunrise and sunset.
     $isDay = ($weatherData['dt'] > $weatherData['sys']['sunrise']
       && $weatherData['dt'] < $weatherData['sys']['sunset']);
-    $cityPhoto = getCityPhoto($city, $unsplashKey, $isDay);
+    $cityPhoto = getCityPhoto($city, $unsplashKey);
     // Pick weather emojis depending on day/night
     if ($isDay) {
       $emojiClear = "☀️";
-      $emojiFew = "🌤️";
       $emojiClouds = "☁️";
-      $emojiRain = "🌧️";
+      $emojiRain = "☔";
       $emojiSnow = "❄️";
+      $emojiFew = "🌤️";
     } else {
       $emojiClear = "🌙";
-      $emojiFew = "☁️🌙";
       $emojiClouds = "☁️";
-      $emojiRain = "🌧️🌙";
-      $emojiSnow = "🌨️🌙";
+      $emojiRain = "☔";
+      $emojiSnow = "🌨️";
+      $emojiFew = "🌙";
     }
 
     // Emoji shown in the title for the current weather type
@@ -153,11 +153,11 @@ if (!$cityPhoto && !$weatherType) {
 
       <?php elseif ($weatherType === "few"): ?>
         <!-- Few clouds: sun/moon + some clouds drifting -->
-        <div class="cloud" style="top: 0.5%; animation-duration: 53s;"><?= $emojiFew ?></div>
-        <div class="cloud" style="top: 15%; animation-duration: 50s; animation-delay: -40s;"><?= $emojiFew ?></div>
-        <div class="cloud" style="top: 35%; animation-duration: 50s; animation-delay: -20s;"><?= $emojiFew ?></div>
-        <div class="cloud" style="top: 55%; animation-duration: 50s; animation-delay: -25s;"><?= $emojiFew ?></div>
-        <div class="cloud" style="top: 75%; animation-duration: 50s; animation-delay: -5s;"><?= $emojiFew ?></div>
+        <div class="cloud" style="top: 0.5%; animation-duration: 53s;"><?= $emojiClear ?></div>
+        <div class="cloud" style="top: 15%; animation-duration: 50s; animation-delay: -40s;"><?= $emojiClear ?></div>
+        <div class="cloud" style="top: 35%; animation-duration: 50s; animation-delay: -20s;"><?= $emojiClouds ?></div>
+        <div class="cloud" style="top: 55%; animation-duration: 50s; animation-delay: -25s;"><?= $emojiClear ?></div>
+        <div class="cloud" style="top: 75%; animation-duration: 50s; animation-delay: -5s;"><?= $emojiClouds ?></div>
 
       <?php endif; ?>
 
@@ -177,12 +177,11 @@ if (!$cityPhoto && !$weatherType) {
 
   <div class="container">
     <!-- Title with a weather emoji that changes based on conditions and day/night -->
-    <h1 class="app-title">
-      <?= $weatherIcon ?> Weather Now
+    <h1 class="app-title"> Weather Now
     </h1>
 
     <form method="get" action="">
-      <input type="text" name="city" placeholder="<?= htmlspecialchars($weatherData['name'] ?? 'Enter city...') ?>"
+      <input type="text" name="city" placeholder="Enter city..." value="<?= htmlspecialchars($_GET['city'] ?? '') ?>"
         class="search-input">
       <button type="submit" class="search-button">Search</button>
     </form>
@@ -197,11 +196,17 @@ if (!$cityPhoto && !$weatherType) {
     <!-- Show results only when we have weather data -->
     <?php if ($weatherData): ?>
       <div class="weather-result">
-        <h2><?= htmlspecialchars($weatherData['name']) ?></h2>
-        <p class="local-time"><strong>⌛ Local Time:</strong> <?= htmlspecialchars($localTime) ?></p>
+        <h2>🏛️
+          <?= htmlspecialchars($weatherData['name']) ?>,<?= htmlspecialchars($weatherData['sys']['country']) ?>
+        </h2>
+        <p class="local-time"><strong>
+            🕓 Local Time:
+          </strong> <?= htmlspecialchars($localTime) ?></p>
         <p class="temp"><strong>🌡️ Temperature:</strong> <?= htmlspecialchars($weatherData['main']['temp']) ?>°C</p>
         <p class="humidity"><strong>💧 Humidity:</strong> <?= htmlspecialchars($weatherData['main']['humidity']) ?>%</p>
-        <p class="description"><strong>🌤️ Weather Description:</strong>
+        <p class="description"><strong>
+            <?= $weatherIcon ?> Weather Description:
+          </strong>
           <?= htmlspecialchars($weatherData['weather'][0]['description']) ?></p>
       </div>
     <?php endif; ?>
